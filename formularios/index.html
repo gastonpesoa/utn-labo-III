@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Formularios</title>
+</head>
+<body>
+    <h1>Formularios</h1>
+    <h2>GET</h2>
+    <form id="frm1" action="pagina1.php" method="get">
+        <fieldset>
+            <legend>Datos Personales:</legend>
+            <p>
+                <label for="txtNombre">Nombre: </label>
+                <input type="text" id="txtNombre" name="nombre" placeholder="Ingrese su nombre" required > 
+                <!-- <input type="text" id="txtNombre" name="nombre" placeholder="Ingrese su nombre" readonly > 
+                <input type="text" id="txtNombre" name="nombre" placeholder="Ingrese su nombre" disabled >  -->                    
+            </p>
+            <p>
+                <label for="txtClave">Password: </label>
+                <input type="password" id="txtClave" name="password">
+            </p>   
+        </fieldset>
+       
+        <p>
+            <label for="email">Email: </label>
+            <input type="email" id="txtEmail" name="email" placeholder="Ingrese mail" required >                  
+        </p>
+        <p>
+            <label for="edad">Edad: </label>
+            <input type="number" id="txtNumber" name="edad" value="0" min="1" max="10">                  
+        </p>
+        <p>
+            <label for="file">Archivo: </label>
+            <input type="file" id="txtFile" name="file" accept="image/*">                  
+        </p>
+        <p>
+            <label for="fecha">Fecha: </label>
+            <input type="date" id="txtDate" name="date">                  
+        </p> 
+        <p>
+            <select name="" id="">
+                <optgroup label="lenguajes">
+                    <option value="0">C#</option>
+                    <option value="1">JAVA</option>
+                </optgroup> 
+                <optgroup label="lenguajes 2">         
+                    <option value="2">C</option>
+                    <option value="3">PHP</option>
+                </optgroup>  
+            </select> 
+        </p>  
+        <p>
+            <label for="nada">Acepto: </label>
+            <input type="checkbox" id="nada" name="nada" disabled>                   
+        </p>  
+        <p>
+            <fieldset>
+                <legend>Sexo:</legend>
+                <label for="sexo">Masculino</label>
+                <input type="radio" name="sexo" value="M">
+                <label for="sexo">Femenino</label>
+                <input type="radio" name="sexo"  value="F">
+            </fieldset>
+        </p>
+        <p>
+            <label for="txtArea">Comentarios</label><br>
+            <textarea name="txtArea" id="" cols="30" rows="10"></textarea>   
+        </p>    
+        <input type="button" value="Un boton">
+        <input type="submit" value="Enviar">
+        <input type="reset">        
+    </form>
+    <h2>POST</h2>
+    <form action="#" method="POST">
+        <p>
+            <label for="txtNombre2">Nombre: </label>
+            <input type="text" id="txtNombre2" name="nombre">
+        </p>
+        <p>
+            <label for="txtClave2">Password: </label>
+            <input type="password" id="txtClave2" name="password">
+        </p>        
+        <input type="button" value="Un boton">
+        <input type="submit" >
+        <input type="reset">
+        <button>Enviar Formulario</button>
+    </form>
+    <h3>Derechos reservados &copy;</h3>
+    <p>E=m*c<sup>2</sup></p>
+    <p>H<sub>2</sub>O</p>
+    <p><u>subrayado</u></p>
+    <p><mark>marcado</mark></p>
+    <p><del>tachado</del></p>
+    <p>
+        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, iusto? Nemo assumenda mollitia facere, sunt eum excepturi dignissimos, suscipit debitis laboriosam neque numquam dicta repudiandae officiis necessitatibus quod ipsa. Sunt?</span>
+        <span>Non esse facere ut ipsum corporis nisi sapiente asperiores officiis! Eligendi, ipsam consequuntur aut quia velit modi itaque enim quo, possimus corporis praesentium? Veniam accusantium illo, hic dolor nemo vero.</span>
+        <span>Officiis repellat quia odit quibusdam provident aspernatur neque omnis! Dicta enim distinctio quidem corrupti totam tempora excepturi suscipit, fugiat voluptas, minima vero, voluptatem aut cum atque possimus assumenda expedita quia?</span>
+        <span>Facere laboriosam aliquam asperiores sapiente tenetur ipsum, dolor, omnis earum accusamus fuga cum sed odio delectus quis minus accusantium maiores saepe! Doloribus aspernatur perferendis, atque maxime molestiae iusto quaerat delectus?</span>
+        <span>Doloribus dolorem labore consequuntur rem placeat pariatur magnam assumenda, sunt sit consequatur aperiam omnis fugit accusantium amet suscipit, obcaecati, molestiae sed vel illo eum! Nulla excepturi illum impedit doloribus culpa.</span>
+    </p>    
+</body>
+<script>
+    // document.getElementById('txtNombre');
+    // document.getElementsByTagName('h1');
+    // document.getElementsByClassName('');
+    // document.getElementsByName();
+
+    var txtNombre = document.getElementById('txtNombre');
+    // var frm = document.getElementsByTagName('form')[0]; -->> bien cabeza    
+    var frm = document.getElementById('frm1');
+    
+    // frm.addEventListener('submit', manejarSubmit);
+    
+    // function manejarSubmit(e){
+
+    //     e.preventDefault();
+    //     alert("Manejo del submit");
+    // }
+
+    // frm.addEventListener('submit', function(e){
+    //     e.preventDefault();
+    //     alert("Manejo del submit ");
+    // });
+    
+    frm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        alert("Manejo del submit ");
+    });
+    
+</script>
+</html>

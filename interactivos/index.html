@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Lengajes</h1>
+    <details>
+        <summary>Lengajes De prog</summary>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque expedita maxime ex molestias aperiam repudiandae in architecto dignissimos veniam quae ad tenetur quas id, eum nesciunt incidunt iste, ipsum ab.
+        </p>
+    </details>
+    <dialog id="modal">
+        <h2>aLGO</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+        <button id="btnCerrar">X</button>
+    </dialog>
+    <button id="btnModal">Abrir Modal</button>
+</body>
+<script>
+    var btnModal = document.getElementById('btnModal');
+    var btnCerrar = document.getElementById('btnCerrar');
+
+    btnModal.addEventListener('click',()=>{
+        var modal = document.getElementById('modal');
+        // modal.open = !modal.open;
+        modal.setAttribute('open', true);
+    })
+
+    btnCerrar.addEventListener('click',()=>{
+        var modal = document.getElementById('modal');
+        // modal.open = !modal.open;
+        modal.removeAttribute('open');
+    })
+</script>
+</html>
