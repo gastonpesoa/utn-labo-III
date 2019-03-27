@@ -21,20 +21,26 @@
     </dialog>
     <button id="btnModal">Abrir Modal</button>
 </body>
-<script>
-    var btnModal = document.getElementById('btnModal');
-    var btnCerrar = document.getElementById('btnCerrar');
+<script>  
+    var btnModal;
+    var btnCerrar;
 
-    btnModal.addEventListener('click',()=>{
-        var modal = document.getElementById('modal');
-        // modal.open = !modal.open;
-        modal.setAttribute('open', true);
-    })
+    window.addEventListener('load',()=>{
+        btnModal = document.getElementById('btnModal');
+        btnCerrar = document.getElementById('btnCerrar');
 
-    btnCerrar.addEventListener('click',()=>{
-        var modal = document.getElementById('modal');
-        // modal.open = !modal.open;
-        modal.removeAttribute('open');
+        btnModal.addEventListener('click',()=>{
+            var modal = document.getElementById('modal');
+            // modal.open = !modal.open;
+            modal.setAttribute('open', true);
+        })
+
+        btnCerrar.addEventListener('click',()=>{
+            var modal = document.getElementById('modal');
+            // modal.open = !modal.open;
+            modal.removeAttribute('open');
+        })
     })
+    
 </script>
 </html>
