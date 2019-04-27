@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document ej4</title>
+</head>
+
+<body>    
+    <div id="myDiv"></div>
+    <button id="ejecutar">Ejecutar</button>
+    <script>
+        var button = document.getElementById("ejecutar");
+        button.addEventListener('click', ejecutar);
+        function ejecutar() {
+            var div = document.getElementById('myDiv');
+            var parrafo = document.createElement('p');
+            var texto = document.createTextNode('Hola');            
+            parrafo.appendChild(texto);
+            div.appendChild(parrafo);
+        }
+    </script>
+</body>
+</html>
+<!-- innerHTML = sirve para agregar html pisando el elemento existente
+appendChild lo appendea -->

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Lengujes</h2>
+    <ul>
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JS</li>
+    </ul>
+    <button id="ejecutar">Ejecutar</button>
+    <script>
+        var button = document.getElementById("ejecutar");
+        button.addEventListener('click', ejecutar);
+        function ejecutar(){
+            var lista = document.getElementsByTagName('ul')[0];
+            //trae todos los nodos elemento hijos
+            var hijos = lista.children;
+            //trae todo los elementos hijos
+            //console.log(lista.childNodes);
+            for(i=0;i<hijos.length;i++){
+                //console.log(hijos[i]);
+                //console.log(hijos[i].childNodes[0].nodeValue);
+                console.log(hijos[i].textContent);
+            }
+        }
+    </script>
+</body>
+</html>
+
+<!-- nodeValue valor texto del nodo -->

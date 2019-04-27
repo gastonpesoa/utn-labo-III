@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document ej4</title>
+</head>
+
+<body>    
+    <div id="myDiv"></div>
+    <button id="ejecutar">Ejecutar</button>
+    <img id='imagen1' src="../images/Escanear.jpeg" alt="nono">
+    <script>
+        var button = document.getElementById("ejecutar");
+        button.addEventListener('click', ejecutar);
+        function ejecutar() {
+            var imagen = document.querySelector('#imaen1');
+            if(imagen.hasAttribute('src')){
+                imagen.removeAttribute('src');
+            }
+            else{
+                console.log('no tiene ese atributo');
+            }
+            // imagen.hasChildNodes pregunto si tiene nodos hijos
+            while(parrafo.hasChildNodes){
+                parrafo.removeAttribute(parrafo.lastChildNode);
+            }
+        }
+    </script>
+</body>
+</html>
+<!-- innerHTML = sirve para agregar html pisando el elemento existente
+appendChild lo appendea 
+
+crear tabla, por c/ atributo del obj json se agrega un td que se agrega al tr y a la tabla en una func que riciba el array
+
+func que sirva para cualquier array sin importar los atributos de los json
+
+consultar key y values
+
+agrega manejadores de eventos y cuando se haga click en alguna fila se muestra info en un formulario que tiene un abm
+como q se puede editar al darle click
+
+a los td addeventlistener
+navega al parent busca los tr 
+
+funcion recursiva
+
+si tiene hijos se mete sino va al hermano-->

@@ -23,6 +23,20 @@ t
 clase-01
 zencode
 p>lorem*10
+div#myId.myClass
 https://developer.mozilla.org/es/docs/Web/HTML/Elemento
+
+
+=====================
+
+clearfix hack para arreglar float 
+
+==========================================
+
+
+can i use
+
+========================
+
 
 
