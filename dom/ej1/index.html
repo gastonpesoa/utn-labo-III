@@ -17,16 +17,17 @@
     <script>
         var button = document.getElementById("ejecutar");
         button.addEventListener('click', ejecutar);
-        function ejecutar(){
+        function ejecutar(){            
             var lista = document.getElementsByTagName('ul')[0];
             //trae todos los nodos elemento hijos
             var hijos = lista.children;
+            //console.log(lista.children);
             //trae todo los elementos hijos
-            //console.log(lista.childNodes);
+            console.log(lista.childNodes);            
             for(i=0;i<hijos.length;i++){
                 //console.log(hijos[i]);
                 //console.log(hijos[i].childNodes[0].nodeValue);
-                console.log(hijos[i].textContent);
+                //console.log(hijos[i].textContent);
             }
         }
     </script>

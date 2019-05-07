@@ -25,15 +25,13 @@ p, div{
 #myDiv{
     background-color: rgba(150, 2, 255, 0.2);
     height: 100px;
-    width: 100px; 
-    
+    width: 100px;    
     border: 1px solid rgba(150, 2, 255, 1);
     border-radius: 50%;
     margin: auto;
     font-family: 'Courier New', Courier, monospace;
     font-size: 25px;
-    text-align: center;
-    
+    text-align: center;    
 }
 
 ul{
