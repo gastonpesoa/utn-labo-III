@@ -69,7 +69,7 @@ function ShowModalEditForm(event) {
     }
 }
 
-var row, rowCells, parrafo, input, content, label, texto, submitBtn;
+var row, cell, rowCells, parrafo, input, content, label, texto, submitBtn, footer, msg;
 
 function CreateModalEditForm(event, modalContent) {
     row = event.target.parentNode;
@@ -94,21 +94,33 @@ function CreateModalEditForm(event, modalContent) {
     }
     parrafo = document.createElement('p');
     submitBtn = document.createElement('input');
-    submitBtn.setAttribute('type', 'submit');
-    submitBtn.setAttribute('value', 'Grabar');    
-    submitBtn.addEventListener('click', Guardar)
-    parrafo.appendChild(submitBtn);    
+    submitBtn.setAttribute('type', 'button');
+    submitBtn.setAttribute('value', 'Grabar');
+    submitBtn.addEventListener('click', function () {
+        UpdateObject(rowCells);
+        footer = document.getElementsByClassName('modal-footer')[0];
+        parrafo = document.createElement('p');
+        msg = document.createTextNode('Cambios guardados.');
+        parrafo.appendChild(msg);
+        footer.appendChild(parrafo);
+    });
+    parrafo.appendChild(submitBtn);
     modalContent.appendChild(parrafo);
 }
 
-function CreateModalContent(modal, btn, span) {
-    btn.onclick = function () {
+var id, inputs, dataToUpdate;
 
+function UpdateObject(rowCells) {
+    id = rowCells[0].textContent;
+    inputs = document.getElementsByTagName('input');
+    for (i = 0; i < data.length; i++) {
+        if (data[i].id == id) {
+            index = i;
+            data[i].first_name = inputs[0].value;
+            data[i].last_name = inputs[1].value;
+            data[i].email = inputs[2].value;
+            data[i].gender = inputs[3].value;
+            data[i].ip_address = inputs[4].value;            
+        }
     }
-
-    // window.onclick = function (event) {
-    //     if (event.target == modal) {
-    //         modal.style.display = "none";
-    //     }
-    // }
 }
