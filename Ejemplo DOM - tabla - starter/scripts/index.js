@@ -19,6 +19,10 @@ function CreateTableFromObjectsArray(arrayJson, div) {
 
 var headerCol, text, headers = [];
 
+function GetMostParamsObject(){
+    
+}
+
 function CreateTableHeader(object, row) {
     for (keys in object) {
         headerCol = document.createElement('th');
