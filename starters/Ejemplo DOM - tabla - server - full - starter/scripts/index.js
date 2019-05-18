@@ -37,3 +37,8 @@ RTA:{"message":"Baja exitosa"}
 
 //NOTA: EL REQUEST HEADER SE AGREGA UNA VEZ ABIERTA LA CONEXION
 
+window.onload = function(){
+    console.log("arranca");
+    traerPersonas();
+}
+
