@@ -25,7 +25,7 @@ function agregarPersona(persona) {
     console.log(persona);
     xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', function () {
-        procesarPersonas();
+        procesarPostRta();
     });
     var cadena = "http://localhost:3000/agregar";
     var body = { "collection": "personas", "objeto": persona };
@@ -43,7 +43,7 @@ function agregarPersona(persona) {
 function modificarPersona(persona) {
     xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', function () {
-        procesarPersonas();
+        procesarPostRta();
     });
     var cadena = 'http://localhost:3000/modificar';
     var body = { "collection": "personas", "objeto": persona };
@@ -61,7 +61,7 @@ function modificarPersona(persona) {
 function eliminarPersona(id) {
     xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', function () {
-        procesarPersonas();
+        procesarPostRta();
     });
     var cadena = 'http://localhost:3000/eliminar';
     var body = { "collection": "personas", "id": id };

@@ -11,7 +11,7 @@
 // Luego se crea el formulario con todos los elementos necesarios para ABM y se deja oculto
 // Se agrega manejador de evento al boton agregar el cual pasa como parametro el string agregar
 window.onload = function () {
-    traerPersonas();    
+    traerPersonas();
     document.getElementById('btnAgregar').addEventListener('click', function () {
         mostrarFormulario('agregar');
     });
@@ -51,7 +51,7 @@ function refrescarLista(arrayPersonas) {
     tabla.className = 'borde';
     div.appendChild(tabla);
     tabla.appendChild(rowHeader);
-    
+
     // Se recorre la persona con mas propiedades para crear las columnas de la cabecera con el nombre de las keys
     // Por cada iteracion se agrega la key al array de propiedades y se apendean los elementos a la fila cabecera
     for (keys in perMasProps) {
@@ -65,8 +65,8 @@ function refrescarLista(arrayPersonas) {
             col.appendChild(text);
         }
     }
-    
-    
+
+
     // Se recorre el array de personas
     // Por cada iteracion se crea: la fila del elemento , la columna de la prop y el nodo de texto para este,
     // se añaden los manejadores del evento click para modificar el elemento y se apendean los elementos
@@ -95,7 +95,7 @@ var inputs = [];
 var header, btnSubmit, btnUpdate, btnDelete;
 
 function crearFormulario() {
-    
+
     var divFrm = document.getElementById('divFrm');
     var form = document.createElement('form');
     var table = document.createElement('table');
@@ -107,7 +107,7 @@ function crearFormulario() {
     form.appendChild(table);
     table.appendChild(headerRow);
     headerRow.appendChild(header);
-    
+
     for (props in arrayProps) {
         var row = document.createElement('tr');
         var colLabel = document.createElement('td');
@@ -121,7 +121,7 @@ function crearFormulario() {
         colProp.appendChild(input);
         row.appendChild(colLabel);
         row.appendChild(colProp);
-        table.appendChild(row);        
+        table.appendChild(row);
     }
     inputs = document.getElementsByTagName('input');
 
@@ -150,6 +150,12 @@ function crearFormulario() {
         console.log(persona);
         modificarPersona(persona);
     })
+    btnDelete.addEventListener('click', function () {
+        event.preventDefault();
+        if(confirm('¿Confirma la baja de la persona?'))
+            eliminarPersona(inputs[0].value);
+        console.log(inputs[0].value);
+    })
     btnCancel.addEventListener('click', function () {
         event.preventDefault();
         if (divFrm.classList.contains('show')) {
@@ -170,32 +176,31 @@ function crearFormulario() {
     btnCancel.appendChild(contentBtnCancel);
 }
 
-// form.addEventListener('submit', function () {
-//     event.preventDefault();
-//     var accion = event.target;
-//     console.log(accion);
-//     inputs = document.getElementsByTagName('input');
-//     // persona = new Persona(inputs[0].value, inputs[1].value, inputs[2].value, inputs[3].value, inputs[4].value);
-//     // agregarPersona(persona);
-// }) 
+var headerContentAlta = document.createTextNode('Alta de persona');
+var headerContentModif = document.createTextNode('Modificar persona');
+
 function mostrarFormulario(accion) {
 
     if (accion == 'agregar') {
-        // headerContent = document.createTextNode('Alta de persona');
-        // header.appendChild(headerContent);
-        btnSubmit.setAttribute('style','display:block;')        
-        btnUpdate.setAttribute('style','display:none;')        
-        btnDelete.setAttribute('style','display:none;')        
+        if (header.hasChildNodes())
+            header.removeChild(header.firstChild);
+        header.appendChild(headerContentAlta);
+        btnSubmit.setAttribute('style', 'display:inline;')
+        btnUpdate.setAttribute('style', 'display:none;')
+        btnDelete.setAttribute('style', 'display:none;')
     }
-    else {                     
-        var atributos = event.target.parentNode.children; 
-        for(i=0;i<atributos.length;i++){
-            console.log(atributos[i].textContent);            
-            inputs[i].setAttribute('value',atributos[i].textContent);
-        }        
-        btnSubmit.setAttribute('style','display:none;')        
-        btnUpdate.setAttribute('style','display:block;')        
-        btnDelete.setAttribute('style','display:block;')                
+    else {
+        var atributos = event.target.parentNode.children;
+        for (i = 0; i < atributos.length; i++) {
+            console.log(atributos[i].textContent);
+            inputs[i].setAttribute('value', atributos[i].textContent);
+        }
+        if (header.hasChildNodes()) 
+            header.removeChild(header.firstChild);
+        header.appendChild(headerContentModif);
+        btnSubmit.setAttribute('style', 'display:none;')
+        btnUpdate.setAttribute('style', 'display:inline;')
+        btnDelete.setAttribute('style', 'display:inline;')
     }
 
     if (!divFrm.classList.contains('show')) {
