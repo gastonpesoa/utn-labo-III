@@ -103,7 +103,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.post('/agregar', function (req, res) {
     var collection = req.body.collection;
     var nuevoObjeto = req.body.objeto;
-
+    
         require('fs').readFile(__dirname + getPathFromCollection(collection), 'utf8', function (err, data) {
             if (err) {
                  throw err; // error handling

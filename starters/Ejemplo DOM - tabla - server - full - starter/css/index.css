@@ -23,7 +23,7 @@ table tr:nth-child(even){
     left: 50%;
     border-radius: 30px;
     transform: translate(-50%, -50%);
-    color: rgb(199, 52, 33);
+    color: white;
     font-weight: bold;   
     background-color: rebeccapurple;
 }
