@@ -1,0 +1,5 @@
+$ -> object jquery
+getElementById -> $("#miBoton") -> usa selectores de CSS
+$("p")
+$(".p")
+$("div p")

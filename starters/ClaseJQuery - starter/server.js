@@ -47,8 +47,20 @@ app.get('/holamundo', function (req, res) {
     require('fs').readFile(__dirname + '/ej16.AjaxFull/load.html', 'utf8', function (err, data) {
         res.send(data); 
     });
-       
 });
+
+app.post('/loadpost', function (req, res) {   
+    require('fs').readFile(__dirname + '/ej16.AjaxFull/load.html', 'utf8', function (err, data) {
+        setTimeout(function(){res.send(data)},5000); 
+    });
+});
+
+app.get('/loadhtml', function (req, res) {   
+    require('fs').readFile(__dirname + '/ej16.AjaxFull/load.html', 'utf8', function (err, data) {
+        res.send(data); 
+    });
+});
+    
 
 app.get('/traerpersona', function (req, res) {
 

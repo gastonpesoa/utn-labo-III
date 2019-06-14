@@ -1,0 +1,20 @@
+YARN -> Administrador de paquetes
+
+npm install yarn -g
+yarn -v
+yarn init
+yarn init -y
+yarn add bootstrap
+
+yarn install -> si no tengo la carpeta node_modules se fija lo que hay en el package.json y lo instala
+
+npm install font-awesome --save
+
+BOOTSTRAP
+min -> minificado
+
+ptos de quiebre 
+XL >= 1200
+LG >= 992
+MD >= 768
+SM < 576 < XS
