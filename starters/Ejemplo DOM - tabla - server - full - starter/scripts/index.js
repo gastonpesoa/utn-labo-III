@@ -66,7 +66,6 @@ function refrescarLista(arrayPersonas) {
         }
     }
 
-
     // Se recorre el array de personas
     // Por cada iteracion se crea: la fila del elemento , la columna de la prop y el nodo de texto para este,
     // se añaden los manejadores del evento click para modificar el elemento y se apendean los elementos

@@ -61,20 +61,20 @@ function enviarGet(e) {
 
 function enviarGetMensajes(e) {
     e.preventDefault();
-    
+
     var legajo = $('#txtLegajo').val();
     var nombre = $('#txtNombre').val();
-    
+
     var params = {
         'legajo': legajo,
         'nombre': nombre
     }
-    
+
     $.get('http://localhost:3000/concatenar', params, function (respuesta) {
         alert("Correcto");
     })
-    .done(function () {
-        alert("Done");        
+        .done(function () {
+            alert("Done");
         })
         .fail(function () {
             alert("Fail");
@@ -101,11 +101,11 @@ function enviarPost(e) {
 
     $.post('http://localhost:3000/saludo', params, function (respuesta) {
         console.log(respuesta);
-    })       
+    })
 }
 
 function usarLoad(e) {
     e.preventDefault();
 
-    $('#info').load('http://localhost:3000/loadhtml p');   
+    $('#info').load('http://localhost:3000/loadhtml p');
 }
