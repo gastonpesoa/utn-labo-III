@@ -16,10 +16,10 @@
     display: none; /* hidden by default */    
 }
 
-form table{
+form {
 
     vertical-align: center;
-    margin-left: 250px;
+    margin: auto;
     margin-top: 70px;
     background-color: rgba(45, 126, 218, .7);
     border-radius: 5px;

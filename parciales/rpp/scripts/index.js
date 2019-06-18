@@ -9,6 +9,7 @@ var formABM;
 var tableABM;
 
 var lista;
+var perMasProps;
 var perGlobal;
 
 window.onload = asignarEventos;
@@ -21,11 +22,6 @@ function asignarEventos() {
 
     //traer las personas y mostrar en la tabla    
     traerPersonas();
-}
-
-function darAlta(e) {
-    e.preventDefault();
-    console.log(e.target);
 }
 
 function ocultarFrm(event) {
@@ -42,114 +38,163 @@ function mostrarFormulario(persona) {
 
         $("#divFrm").html("");
         formABM = document.createElement('form');
-        tableABM = document.createElement('table');
+        //tableABM = document.createElement('table');
         btnSubmit = document.createElement('input');
-        btnDelete = document.createElement('input');
         btnCancelar = document.createElement('button');
-        var rowBtns = document.createElement('tr');
+        //var rowBtns = document.createElement('tr');
         $(btnCancelar).append(document.createTextNode('Cancelar'));
-        $(btnCancelar).on("click", ocultarFrm);
+        $(btnCancelar).on("click", ocultarFrm).attr('class', 'btn btn-secondary');
+
+        perMasProps = buscarMayor(lista);
+
+        for (props in perMasProps) {
+
+            if (props !== "id" && props !== "active") {
+
+                //var row = document.createElement('tr');
+                var field = document.createElement('div');
+                //var colLabel = document.createElement('td');
+                var label = document.createElement('label');
+                //var colInput = document.createElement('td');
+
+                if (props === "gender") {
+
+                    var divRdoF = document.createElement('div');
+                    var rdoF = document.createElement('input');
+                    $(rdoF).attr({
+                        type: 'radio',
+                        id: 'rdoFemenino',
+                        name: props,
+                        required: "required",
+                        value: "Female",
+                        class: "form-check-input"
+                    });
+                    var labelF = document.createElement('label');
+                    $(labelF).append(document.createTextNode('F')).attr({ class: "form-check-label", for: "rdoFemenino" });
+                    $(divRdoF).append(rdoF,labelF).attr("class", "form-check");
+
+                    var divRdoM = document.createElement('div');
+                    var rdoM = document.createElement('input');
+                    $(rdoM).attr({
+                        type: 'radio',
+                        id: 'rdoMasculino',
+                        name: props,
+                        value: "Male",
+                        class: "form-check-input"
+                    });
+                    var labelM = document.createElement('label');
+                    $(labelM).append(document.createTextNode('M')).attr({ class: "form-check-label", for: "rdoMasculino" });
+                    $(divRdoM).append(rdoM,labelM).attr("class", "form-check");
+                    
+                    $(label).append(document.createTextNode('Género: '));
+                    //$(colInput).append(divRdoF, divRdoM);
+                    //$(field).append(colLabel, colInput);
+                    $(field).append(label, divRdoF, divRdoM).attr("class","rdoButtons");
+                    //$(field).attr("class", "form-check");
+                }
+                else {
+                    
+                    var input = document.createElement('input');
+                    $(input).attr({
+                        id: props,
+                        name: props,
+                        required: "required",
+                        class: "form-control"
+                    });
+
+                    if (props == "email") {
+                        $(input).attr("type", "email");
+                    } else {
+                        $(input).attr("type", "text");
+                    }
+
+                    $(label).append(document.createTextNode(props)).attr("for", props);
+                    //$(colInput).append(input);
+                    //$(field).append(colLabel, colInput).attr("class", "form-group");
+                    $(field).append(label, input).attr("class", "form-group x");
+                }
+
+                $(formABM).append(field);
+
+                //$(colLabel).append(label);
+                //$(field).append(colLabel, colInput);
+                //$(row).append(field);
+                //$(tableABM).append(row);
+            }
+        }
+
+
+        //$(tableABM).append(rowBtns);
+        //$(formABM).append(tableABM);
+        //$(formABM).append(field);
+        $('#divFrm').append(formABM);
 
         if (persona) {
 
             perGlobal = persona;
+
             for (props in persona) {
 
-                if (props !== "id" && props !== "active") {
+                if (props === "gender") {
 
-                    var row = document.createElement('tr');
-                    var field = document.createElement('fieldset');
-                    var colLabel = document.createElement('td');
-                    var label = document.createElement('label');
-                    var colInput = document.createElement('td');
+                    persona[props] === "Female" ?
+                        $("#rdoFemenino").attr("checked", "true") :
+                        $("#rdoMasculino").attr("checked", "true");
+                }
+                else {
 
-                    if (props === "gender") {
-
-                        var rdoF = document.createElement('input');
-                        $(rdoF).attr({
-                            type: 'radio',
-                            id: 'rdoFemenino',
-                            name: props
-                        });
-                        var labelF = document.createElement('label');
-                        $(labelF).append(document.createTextNode('F')).attr("for", "rdoFemenino");
-
-                        var rdoM = document.createElement('input');
-                        $(rdoM).attr({
-                            type: 'radio',
-                            id: 'rdoMasculino',
-                            name: props
-                        });
-                        var labelM = document.createElement('label');
-                        $(labelM).append(document.createTextNode('M')).attr("for", "rdoMasculino");
-
-                        persona[props] === "Female" ? $(rdoF).attr("checked", "true") : $(rdoM).attr("checked", "true");
-
-                        $(label).append(document.createTextNode('Género: '));
-                        $(colInput).append(rdoF, labelF, rdoM, labelM);
-                    }
-                    else {
-
-                        var input = document.createElement('input');
-                        $(input).attr({
-                            id: props,
-                            type: "text",
-                            name: props,
-                            value: persona[props],
-                            required: "required"
-                        })
-                        $(label).append(document.createTextNode(props)).attr("for", props);
-                        $(colInput).append(input);
-                    }
-
-                    $(colLabel).append(label);
-                    $(field).append(colLabel, colInput);
-                    $(row).append(field);
-                    $(tableABM).append(row);
+                    $("#" + props + "").attr("value", persona[props]);
                 }
             }
-
-            $(btnDelete).attr({ class: 'buttonpressed', id: 'btnDelete', type: "submit", value: "Eliminar" });
-            $(btnSubmit).attr({ class: 'buttonpressed', id: 'btnUpdate', type: "submit", value: "Modificar" });
-            $(rowBtns).append(btnDelete);                      
+            btnDelete = document.createElement('input');
+            $(btnDelete).attr({ class: 'buttonpressed btn btn-danger', id: 'btnDelete', type: "submit", value: "Eliminar" });
+            $(btnSubmit).attr({ class: 'buttonpressed btn btn-primary', id: 'btnUpdate', type: "submit", value: "Modificar" });
+            //$(rowBtns).append(btnDelete);
+            $(formABM).append(btnDelete);
         }
         else {
 
-            $(btnSubmit).attr({ class: 'buttonpressed', id: 'btnCreate', type: "submit", value: "Dar de Alta" });
+            $(btnSubmit).attr({ class: 'buttonpressed btn btn-primary', id: 'btnCreate', type: "submit", value: "Dar de Alta" });
         }
-        
+
         $(document).on('click', ".buttonpressed", function () {
             buttonpressed = $(this).attr('id');
         });
 
-        $(rowBtns).append(btnSubmit, btnCancelar);
-        $(tableABM).append(rowBtns);
-
-        $(formABM).append(tableABM).submit(function (e) {
+        //$(formABM).append(tableABM).submit(function (e) {
+        $(formABM).submit(function (e) {
             e.preventDefault();
-            if(buttonpressed == "btnCreate"){
-                darAlta(e);
-            } else {
-                if(buttonpressed == "btnUpdate"){
+            if (buttonpressed == "btnCreate") {
+
+                altaPersona(e);
+            }
+            else {
+
+                if (buttonpressed == "btnUpdate") {
+
                     modificacionPersona(e);
                 }
-                if(buttonpressed == "btnDelete"){
+                if (buttonpressed == "btnDelete") {
+
                     eliminacionPersona(perGlobal);
-                } 
+                }
             }
         });
 
-        $(formABM).append(tableABM);
-        $('#divFrm').append(formABM);
+        //$(rowBtns).append(btnSubmit, btnCancelar);
+        $(formABM).append(btnSubmit, btnCancelar);
         $('#divFrm').show();
     }
 }
 
 function setSpinner() {
 
-    $('body').append('<div id="spinner"></div>');
-    $('#spinner').append('<img id="spinner" src="./images/spinner.gif" alt="preloader">')
-        .css({ 'text-align': 'center' });
+    if (!$('#spinner').length) {
+
+        $('body').append('<div id="spinner"></div>');
+        $('#spinner').append('<img id="spinner" src="./images/spinner.gif" alt="preloader">')
+            .css({ 'text-align': 'center', 'display': 'block' });
+    }
 }
 
 function buscarMayor(lista) {
@@ -213,6 +258,7 @@ function actualizarTabla(lista) {
             }
 
             $("#bodyTabla").append(nuevaRow);
+            $("#tablaLista").attr("class", "table table-bordered");
         }
     });
 
@@ -240,32 +286,61 @@ function actualizarTabla(lista) {
 }
 
 
-function altaPersona() {
-    //agregar el codigo que crea conveniente
+function altaPersona(e) {
 
-    var nuevaPersona = new Persona(nombre, apellido, email, sexo);
+    //agregar el codigo que crea conveniente    
+    // var formdata = $(e.target).serializeArray();
+    // var data = {};
+    // $(formdata).each(function (index, obj) {
+    //     data[obj.name] = obj.value;
+    // });
+
+    var nuevaPersona =
+    {
+        "id": "",
+        "first_name": $("#first_name").val(),
+        "last_name": $("#last_name").val(),
+        "email": $("#email").val(),
+        "gender": getGender(),
+        "active": ""
+    };
+
+    //var nuevaPersona = new Persona($("#first_name").val(), $("#last_name").val(), $("#email").val(), getGender());
+    //console.dir(nuevaPersona);
 
     //enviar la insercion al server
+    guardarPersona(nuevaPersona);
 }
 
 
 function eliminacionPersona(persona) {
 
     //agregar el codigo que crea conveniente
-    console.dir(persona.id);    
+    console.dir(persona.id);
     //var id = parseInt(document.getElementById('id').value);
     //enviar la eliminacion al server
-    if(!confirm("Se eliminará a " + persona.first_name + ", " + persona.last_name + ". ¿Confirma la baja?")){
+    if (!confirm("Se eliminará a " + persona.first_name + ", " + persona.last_name + ". ¿Confirma la baja?")) {
         ocultarFrm();
         return false;
     }
-    eliminarPersona(persona.id);    
+    eliminarPersona(persona.id);
 }
 
 function modificacionPersona(event) {
 
     //agregar el codigo que crea conveniente
     event.preventDefault();
+    perGlobal.gender = getGender();
+    perGlobal.first_name = $("#first_name").val();
+    perGlobal.last_name = $("#last_name").val();
+    perGlobal.email = $("#email").val();
+
+    //enviar la modificacion al server
+    modificarPersona(perGlobal);
+}
+
+function getGender() {
+
     var gender;
     if (document.getElementById('rdoMasculino').checked) {
         gender = 'Male';
@@ -273,13 +348,7 @@ function modificacionPersona(event) {
     else {
         gender = 'Female';
     }
-    perGlobal.gender = gender;
-    perGlobal.first_name = $("#first_name").val();
-    perGlobal.last_name = $("#last_name").val();
-    perGlobal.email = $("#email").val();
-
-    //enviar la modificacion al server
-    modificarPersona(perGlobal);
+    return gender;
 }
 
 function Persona(nombre, apellido, email, sexo) {

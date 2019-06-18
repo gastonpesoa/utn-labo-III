@@ -81,7 +81,8 @@ app.post('/agregar', function (req, res) {
                 var response = {
                     message: "Alta exitosa",
                 }
-                setTimeout(function(){res.send(response);    },5000);
+                //setTimeout(function(){res.send(response);    },5000);
+                res.send(response);
             }
            
         });  

@@ -25,6 +25,7 @@ function traerPersonas() {
       setSpinner();
     },
     success: function (response) {
+      console.log(response['message']);
       lista = response['data'];
       actualizarTabla(lista);
     },
@@ -32,12 +33,51 @@ function traerPersonas() {
       alert("Error " + xhr.status + ' ' + xhr.statusText);
     },
     complete: function () {
-      $('#spinner').html("");
+      $('#spinner').remove();
     }
   });
 }
 
 function guardarPersona(persona) {
+
+  // xhr = new XMLHttpRequest();
+  // xhr.addEventListener('readystatechange',function(){
+  //   procesarAlta();
+  // })
+  // var cadena = 'http://localhost:3000/agregar';
+  // var body = {'collection':'personas','objeto':persona}
+  // xhr.open('POST', cadena, true);
+  // xhr.setRequestHeader("Content-Type", "application/json");
+  // xhr.send(JSON.stringify(body));
+
+  var params = {
+    'collection': 'personas',
+    'objeto': persona
+  }
+
+  $.ajax({
+
+    url: server + '/agregar',
+    type: 'post',
+    data: JSON.stringify(params),
+    headers: {
+      "Content-Type": "application/json"
+    },
+    dataType: 'json',
+    beforeSend: function () {
+      ocultarFrm();
+      $("#bodyTabla").html("");
+      setSpinner();
+    },
+    success: function (data) {
+      console.log(data['message']);
+      traerPersonas();
+    },
+    error: function (xhr) {
+      console.log("Error " + xhr.status + ' ' + xhr.statusText);
+    },
+  });
+
 
 }
 
