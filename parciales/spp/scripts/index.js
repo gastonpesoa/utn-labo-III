@@ -1,0 +1,403 @@
+var btnAlta;
+var divFrm;
+var frmAlta;
+var divInfo;
+var btnCancelar;
+var btnSubmit;
+var btnDelete;
+var formABM;
+var tableABM;
+
+var lista = [];
+var perMasProps;
+var perGlobal;
+
+window.onload = asignarEventos;
+
+function asignarEventos() {
+
+    $('#btnAlta').click(function () {
+        mostrarFormulario();
+    });
+
+    //traer las personas y mostrar en la tabla
+    traerPersonasLocal();
+
+    $('#selectGenero').change(setAgeInfoSection);
+
+}
+
+function objectWithoutKey(object, key) {
+    
+    console.log('key');
+    console.dir(key);
+    per = {};
+    for(props in object)
+    {
+        console.log('props');
+        console.dir(props);
+        if(props != key)
+        {
+            per.prototype.props = object[props];
+        }
+    }
+    console.log('per');
+    console.dir(per);
+    return per;
+}
+
+function checkBoxChange(e) {
+
+    if (this.checked) {
+
+        console.log('checked');
+        console.dir(e.target.id);
+    }
+    else {
+
+        listaNew = lista.map(x => {
+            return objectWithoutKey(x, e.target.id);
+        });
+
+        console.log('listaNew');
+        console.dir(listaNew);
+    }
+}
+
+function setAgeInfoSection(e) {
+
+    value = $('#selectGenero').val();
+
+    var promedio;
+    var personaMayor;
+    var listaAge;
+    // var listaAge = JSON.parse(localStorage.getItem('listaPersonas')).map(p => { return p.edad });
+
+    switch (value) {
+        case "Indistinto":
+            listaAge = lista.map(p => { return p.edad });
+            break;
+
+        case "Femenino":
+            listaAge = lista.filter(p => { return p.gender === 'Female' }).map(p => { return p.edad });
+            break;
+
+        case "Masculino":
+            listaAge = lista.filter(p => { return p.gender === 'Male' }).map(p => { return p.edad });
+            break;
+    }
+
+    promedio = listaAge.reduce((previous, current) => {
+        return previous + current;
+    }) / listaAge.length;
+
+    personaMayor = lista.reduce(function (mayor, actual) {
+        if (mayor.edad > actual.edad)
+            return mayor;
+        else
+            return actual;
+    }, 0);
+
+    $('#inputPromedioEdad').val(promedio);
+    $('#inputMasViejo').val(personaMayor.first_name);
+}
+
+function ocultarFrm(event) {
+    if (event)
+        event.preventDefault();
+    $("#divFrm").hide();
+}
+
+var buttonpressed;
+
+function mostrarFormulario(persona) {
+
+    if ($("#divFrm").css("display") != "block") {
+
+        $("#divFrm").html("");
+        formABM = document.createElement('form');
+        btnSubmit = document.createElement('input');
+        btnCancelar = document.createElement('button');
+        $(btnCancelar).append(document.createTextNode('Cancelar'));
+        $(btnCancelar).on("click", ocultarFrm).attr('class', 'btn btn-secondary');
+        perMasProps = buscarMayor(lista);
+
+        for (props in perMasProps) {
+
+            if (props !== "id" && props !== "active") {
+                var field = document.createElement('div');
+                var label = document.createElement('label');
+
+                if (props === "gender") {
+                    var divRdoF = document.createElement('div');
+                    var rdoF = document.createElement('input');
+                    $(rdoF).attr({
+                        type: 'radio',
+                        id: 'rdoFemenino',
+                        name: props,
+                        required: "required",
+                        value: "Female",
+                        class: "form-check-input"
+                    });
+                    var labelF = document.createElement('label');
+                    $(labelF).append(document.createTextNode('F')).attr({ class: "form-check-label", for: "rdoFemenino" });
+                    $(divRdoF).append(rdoF, labelF).attr("class", "form-check");
+
+                    var divRdoM = document.createElement('div');
+                    var rdoM = document.createElement('input');
+                    $(rdoM).attr({
+                        type: 'radio',
+                        id: 'rdoMasculino',
+                        name: props,
+                        value: "Male",
+                        class: "form-check-input"
+                    });
+                    var labelM = document.createElement('label');
+                    $(labelM).append(document.createTextNode('M')).attr({ class: "form-check-label", for: "rdoMasculino" });
+                    $(divRdoM).append(rdoM, labelM).attr("class", "form-check");
+
+                    $(label).append(document.createTextNode('Género: '));
+                    $(field).append(label, divRdoF, divRdoM).attr("class", "rdoButtons");
+                }
+                else {
+                    var input = document.createElement('input');
+                    $(input).attr({
+                        id: props,
+                        name: props,
+                        required: "required",
+                        class: "form-control"
+                    });
+
+                    if (props == "email")
+                        $(input).attr("type", "email");
+                    else {
+                        if (props == "edad")
+                            $(input).attr({ type: "number", min: 0, max: 100 });
+                        else
+                            $(input).attr("type", "text");
+                    }
+
+                    $(label).append(document.createTextNode(props)).attr("for", props);
+                    $(field).append(label, input).attr("class", "form-group x");
+                }
+
+                $(formABM).append(field);
+            }
+        }
+        $('#divFrm').append(formABM);
+
+        if (persona) {
+            perGlobal = persona;
+
+            for (props in persona) {
+                if (props === "gender") {
+                    persona[props] === "Female" ?
+                        $("#rdoFemenino").attr("checked", "true") :
+                        $("#rdoMasculino").attr("checked", "true");
+                }
+                else {
+                    $("#" + props + "").attr("value", persona[props]);
+                }
+            }
+            btnDelete = document.createElement('input');
+            $(btnDelete).attr({ class: 'buttonpressed btn btn-danger', id: 'btnDelete', type: "submit", value: "Eliminar" });
+            $(btnSubmit).attr({ class: 'buttonpressed btn btn-primary', id: 'btnUpdate', type: "submit", value: "Modificar" });
+            $(formABM).append(btnDelete);
+        }
+        else {
+            $(btnSubmit).attr({ class: 'buttonpressed btn btn-primary', id: 'btnCreate', type: "submit", value: "Dar de Alta" });
+        }
+
+        $(document).on('click', ".buttonpressed", function () {
+            buttonpressed = $(this).attr('id');
+        });
+        $(formABM).submit(function (e) {
+            e.preventDefault();
+
+            ocultarFrm();
+            $("#bodyTabla").html("");
+            $("#camposMostrados").html("");
+
+            if (buttonpressed == "btnCreate") {
+
+                altaPersona(e);
+            }
+            else {
+
+                if (buttonpressed == "btnUpdate") {
+
+                    modificacionPersona(e);
+                }
+                if (buttonpressed == "btnDelete") {
+
+                    eliminacionPersona(perGlobal);
+                }
+            }
+        });
+        $(formABM).append(btnSubmit, btnCancelar);
+        $('#divFrm').show();
+    }
+}
+
+function setSpinner() {
+
+    if (!$('#spinner').length) {
+
+        $('body').append('<div id="spinner"></div>');
+        $('#spinner').append('<img id="spinner" src="./images/spinner.gif" alt="preloader">')
+            .css({ 'text-align': 'center', 'display': 'block' });
+    }
+}
+
+function buscarMayor(lista) {
+
+    var numProps = 0, mayor, objMasProps;
+    for (i = 0; i < lista.length; i++) {
+        for (props in lista[i]) {
+            numProps++; // A cada persona se le cuenta la cantidad de props
+        }
+        if (i == 0) { // Si es la primera persona del array, va a ser el mayor con el que se van a comparar lo demas
+            mayor = numProps;
+            objMasProps = lista[i];
+        }
+        // Si no es la primer persona del array,
+        //se compara sus cantidad de propiedades con el primero o el mayor hasta esta iteracion
+        else {
+            if (numProps > mayor) {
+                mayor = numProps;
+                objMasProps = lista[i];
+            }
+        }
+        numProps = 0; // Se resetea el contador para analizar la proxima persona
+    }
+    return objMasProps;
+}
+
+function crearCheckBoxs(persona) {
+
+    for (prop in persona) {
+
+        if (prop !== 'active') {
+
+            var divCheck = document.createElement('div');
+            var chekBox = document.createElement('input');
+            $(chekBox).attr({
+                type: 'checkbox',
+                id: prop,
+                name: prop,
+                checked: "checked",
+                value: prop,
+                class: "form-check-input"
+            }).on("change", checkBoxChange);
+            var label = document.createElement('label');
+            $(label).append(document.createTextNode(prop)).attr({ class: "form-check-label", for: prop });
+            $(divCheck).append(chekBox, label).attr("class", "form-check form-check-inline");
+            $('#camposMostrados').append(divCheck);
+        }
+    };
+}
+
+function actualizarTabla(lista) {
+
+    lista.forEach(function (persona) {
+
+        if (persona) {
+
+            var nuevaRow = document.createElement('tr');
+            $(nuevaRow).on("click", function () {
+                mostrarFormulario(persona);
+            });
+            for (props in persona) {
+
+                if (persona[props] != "true" && persona[props] != "false") {
+
+                    var col = document.createElement('td');
+                    $(col).append(document.createTextNode(persona[props]));
+                    $(nuevaRow).append(col);
+                }
+            }
+            $("#bodyTabla").append(nuevaRow);
+            $("#tablaLista").attr("class", "table table-bordered");
+        }
+    });
+}
+
+
+function altaPersona() {
+
+    var nuevaPersona =
+    {
+        "id": "",
+        "first_name": $("#first_name").val(),
+        "last_name": $("#last_name").val(),
+        "email": $("#email").val(),
+        "gender": getGender(),
+        "edad": parseInt($("#edad").val()),
+        "active": "true"
+    };
+
+    //enviar la insercion al server
+    //guardarPersona(nuevaPersona);
+
+    //enviar la insercion al localStorage
+    guardarPersonaLocal(nuevaPersona)
+}
+
+
+function eliminacionPersona(persona) {
+
+    //agregar el codigo que crea conveniente
+    //enviar la eliminacion al server
+    if (!confirm("Se eliminará a " + persona.first_name + ", " + persona.last_name + ". ¿Confirma la baja?")) {
+
+        ocultarFrm();
+        return false;
+    }
+
+    //eliminarPersona(persona.id);
+
+    //eliminar del localStorage
+    eliminarPersonaLocal(persona.id);
+}
+
+function modificacionPersona(event) {
+
+    //agregar el codigo que crea conveniente
+    event.preventDefault();
+    perGlobal.gender = getGender();
+    perGlobal.first_name = $("#first_name").val();
+    perGlobal.last_name = $("#last_name").val();
+    perGlobal.email = $("#email").val();
+    perGlobal.edad = parseInt($("#edad").val());
+
+    //enviar la modificacion al server
+    //modificarPersona(perGlobal);
+
+    //enviar la modificacion al localStorage
+    modificarPersonaLocal(perGlobal);
+}
+
+function getGender() {
+
+    var gender;
+    if (document.getElementById('rdoMasculino').checked) {
+        gender = 'Male';
+    }
+    else {
+        gender = 'Female';
+    }
+    return gender;
+}
+
+function Persona(nombre, apellido, email, sexo) {
+    this.first_name = nombre;
+    this.last_name = apellido;
+    this.email = email;
+    this.gender = sexo;
+}
+
+
+
+
+
+

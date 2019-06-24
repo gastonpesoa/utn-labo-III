@@ -20,7 +20,7 @@ function asignarEventos() {
         mostrarFormulario();
     });
 
-    //traer las personas y mostrar en la tabla    
+    //traer las personas y mostrar en la tabla
     traerPersonas();
 }
 
@@ -50,7 +50,7 @@ function mostrarFormulario(persona) {
         select = document.createElement("select");
         option1 = document.createElement("option");
         option2 = document.createElement("option");
-                
+
         perMasProps = buscarMayor(lista);
 
         for (props in perMasProps) {
@@ -91,7 +91,7 @@ function mostrarFormulario(persona) {
                     var labelM = document.createElement('label');
                     $(labelM).append(document.createTextNode('M')).attr({ class: "form-check-label", for: "rdoMasculino" });
                     $(divRdoM).append(rdoM,labelM).attr("class", "form-check");
-                    
+
                     $(label).append(document.createTextNode('Género: '));
                     //$(colInput).append(divRdoF, divRdoM);
                     //$(field).append(colLabel, colInput);
@@ -109,18 +109,18 @@ function mostrarFormulario(persona) {
                             required: "required",
                             class: "form-control"
                         });
-    
+
                         if (props == "email") {
                             $(input).attr("type", "email");
                         } else {
                             $(input).attr("type", "text");
                         }
-    
+
                         $(label).append(document.createTextNode(props)).attr("for", props);
                         //$(colInput).append(input);
                         //$(field).append(colLabel, colInput).attr("class", "form-group");
                         $(field).append(label, input).attr("class", "form-group x");
-                    }                    
+                    }
                 }
 
                 $(formABM).append(field);
@@ -138,7 +138,7 @@ function mostrarFormulario(persona) {
         $(select).append(option1, option2).attr({value:"Sabe nadar?", id:"sabeNadar" })
         $(divSelect).append(labelSelect, select);
         $(formABM).append(divSelect);
-        
+
         //$(tableABM).append(rowBtns);
         //$(formABM).append(tableABM);
         //$(formABM).append(field);
@@ -223,7 +223,7 @@ function buscarMayor(lista) {
             mayor = numProps;
             objMasProps = lista[i];
         }
-        // Si no es la primer persona del array, 
+        // Si no es la primer persona del array,
         //se compara sus cantidad de propiedades con el primero o el mayor hasta esta iteracion
         else {
             if (numProps > mayor) {
@@ -262,10 +262,10 @@ function actualizarTabla(lista) {
                 mostrarFormulario(persona);
             });
 
-            for (props in persona) {                
+            for (props in persona) {
 
                 if (persona[props] != "true" && persona[props] != "false") {
-                    
+
                     var col = document.createElement('td');
                     $(col).append(document.createTextNode(persona[props]));
                     $(nuevaRow).append(col);
@@ -303,7 +303,7 @@ function actualizarTabla(lista) {
 
 function altaPersona(e) {
 
-    //agregar el codigo que crea conveniente    
+    //agregar el codigo que crea conveniente
     // var formdata = $(e.target).serializeArray();
     // var data = {};
     // $(formdata).each(function (index, obj) {
