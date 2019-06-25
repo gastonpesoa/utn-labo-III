@@ -9,6 +9,8 @@ var formABM;
 var tableABM;
 
 var lista = [];
+var listaSinKey = [];
+var listaConKey = [];
 var perMasProps;
 var perGlobal;
 
@@ -22,45 +24,101 @@ function asignarEventos() {
 
     //traer las personas y mostrar en la tabla
     traerPersonasLocal();
-
+    // $("#camposMostrados").html("");
+    // crearCheckBoxs(lista[0]);
     $('#selectGenero').change(setAgeInfoSection);
 
 }
 
-function objectWithoutKey(object, key) {
-    
-    console.log('key');
-    console.dir(key);
-    per = {};
-    for(props in object)
-    {
-        console.log('props');
-        console.dir(props);
-        if(props != key)
-        {
-            per.prototype.props = object[props];
-        }
-    }
-    console.log('per');
-    console.dir(per);
-    return per;
-}
-
 function checkBoxChange(e) {
+
+    var key  = e.target.id.replace("check-","");
+
+    // console.log("key");
+    // console.log(key);
+    // var quitarProp = function (object, key) {
+
+    //     console.log('key');
+    //     console.dir(key);
+    //     console.log('object');
+    //     console.dir(object);
+    //     // return delete object[key];
+    // }
+
 
     if (this.checked) {
 
-        console.log('checked');
-        console.dir(e.target.id);
+        var listado = JSON.parse(localStorage.getItem('listaPersonas'));
+        // console.log("AGREGO KEY");
+        // console.log('lista antes');
+        // console.log(listaSinKey);
+
+        // var listaConKey = listaSinKey.map(function (x, i) {
+        var listaConKey = lista.map(function (x, i) {
+
+            // console.log('key');
+            // console.log(key);
+            // console.log('x sin key');
+            // console.log(x);
+            // console.log('listado');
+            // console.log(listado);
+            // console.log('listado[i][key]');
+            // console.log(listado[i][key]);
+            x[key] = listado[i][key];
+            // console.log('x[key]');
+            // console.log(x[key]);
+            //var listado = JSON.parse(localStorage.getItem('listaPersonas'));
+            // console.log('x agregado key');
+            // console.log(x);
+            return x;
+        })
+        // console.log('lista despues');
+        // console.log(listaSinKey);
+
+        $("#bodyTabla").html("");
+        $("#headTabla").html("");
+        actualizarTabla(listaConKey);
+        // actualizarTabla(lista);
+        // console.log('checked');
+        // console.dir(e.target.id);
     }
     else {
 
-        listaNew = lista.map(x => {
-            return objectWithoutKey(x, e.target.id);
+        // console.log('SACO KEY')
+        // var listaAmod = lista;
+        // console.log("lista a modificar");
+        // console.log(listaAmod);
+
+        var listaSinKey = lista.map(x => {
+            // console.log('key');
+            // console.log(key);
+            // console.log('x[key]');
+            // console.log(x[key]);
+            delete x[key];
+            // console.log('x sin key');
+            // console.log(x);
+            return x;
         });
 
-        console.log('listaNew');
-        console.dir(listaNew);
+        console.log("lista modificado");
+        console.log(listaSinKey);
+
+        $("#bodyTabla").html("");
+        $("#headTabla").html("");
+        actualizarTabla(listaSinKey);
+        // actualizarTabla(lista);
+        // crearCheckBoxs(listaSinKey[0]);
+        // for (i = 0; i < lista.length; i++) {
+        // console.log('key');
+        // console.log(key);
+        // console.log('lista[i].key');
+        // console.log(lista[i][key]);
+        // delete lista[i][key];
+        // console.log(lista[i]);
+        // }
+
+        // console.log('listaNew');
+        // console.dir(lista);
     }
 }
 
@@ -76,27 +134,38 @@ function setAgeInfoSection(e) {
     switch (value) {
         case "Indistinto":
             listaAge = lista.map(p => { return p.edad });
+            personaMayor = lista.reduce(function (mayor, actual) {
+                if (mayor.edad > actual.edad)
+                    return mayor;
+                else
+                    return actual;
+            }, 0);
             break;
 
         case "Femenino":
             listaAge = lista.filter(p => { return p.gender === 'Female' }).map(p => { return p.edad });
+            personaMayor = lista.filter(p => { return p.gender === 'Female' }).reduce(function (mayor, actual) {
+                if (mayor.edad > actual.edad)
+                    return mayor;
+                else
+                    return actual;
+            }, 0);
             break;
 
         case "Masculino":
             listaAge = lista.filter(p => { return p.gender === 'Male' }).map(p => { return p.edad });
+            personaMayor = lista.filter(p => { return p.gender === 'Male' }).reduce(function (mayor, actual) {
+                if (mayor.edad > actual.edad)
+                    return mayor;
+                else
+                    return actual;
+            }, 0);
             break;
     }
 
     promedio = listaAge.reduce((previous, current) => {
         return previous + current;
     }) / listaAge.length;
-
-    personaMayor = lista.reduce(function (mayor, actual) {
-        if (mayor.edad > actual.edad)
-            return mayor;
-        else
-            return actual;
-    }, 0);
 
     $('#inputPromedioEdad').val(promedio);
     $('#inputMasViejo').val(personaMayor.first_name);
@@ -187,6 +256,9 @@ function mostrarFormulario(persona) {
         $('#divFrm').append(formABM);
 
         if (persona) {
+
+            console.log('persona a modif');
+            console.log(persona);
             perGlobal = persona;
 
             for (props in persona) {
@@ -196,6 +268,11 @@ function mostrarFormulario(persona) {
                         $("#rdoMasculino").attr("checked", "true");
                 }
                 else {
+                    console.log(props);
+                    console.log(persona[props]);
+                    elem = $("#" + props + "");
+                    console.log('elem');
+                    console.log(elem);
                     $("#" + props + "").attr("value", persona[props]);
                 }
             }
@@ -215,6 +292,7 @@ function mostrarFormulario(persona) {
             e.preventDefault();
 
             ocultarFrm();
+            $("#headTabla").html("");
             $("#bodyTabla").html("");
             $("#camposMostrados").html("");
 
@@ -283,14 +361,14 @@ function crearCheckBoxs(persona) {
             var chekBox = document.createElement('input');
             $(chekBox).attr({
                 type: 'checkbox',
-                id: prop,
+                id: 'check-' + prop,
                 name: prop,
                 checked: "checked",
                 value: prop,
                 class: "form-check-input"
             }).on("change", checkBoxChange);
             var label = document.createElement('label');
-            $(label).append(document.createTextNode(prop)).attr({ class: "form-check-label", for: prop });
+            $(label).append(document.createTextNode(prop)).attr({ class: "form-check-label", for: 'check-' + prop });
             $(divCheck).append(chekBox, label).attr("class", "form-check form-check-inline");
             $('#camposMostrados').append(divCheck);
         }
@@ -298,6 +376,23 @@ function crearCheckBoxs(persona) {
 }
 
 function actualizarTabla(lista) {
+
+    console.log('lista a actualizar');
+    console.log(lista);
+
+    var mayor = buscarMayor(lista);
+
+    for (keys in mayor) {
+        var col, text;
+        if (keys != 'active' && keys) {
+            //arrayProps.push(keys);
+            col = document.createElement('th');
+           // col.className = 'borde';
+            text = document.createTextNode(keys);
+            $('#headTabla').append(col);
+            $(col).append(text);
+        }
+    }
 
     lista.forEach(function (persona) {
 
